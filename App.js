@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import Constants from 'expo-constants'
 import NavBar from "./components/NavBar";
 import axios from 'axios'
+import Friend from "./components/Friend";
 
 export default function App() {
   const [friends, setFriends] = useState([])
@@ -10,9 +11,9 @@ export default function App() {
 
   async function fetchFriends() {
     try {
-      const { data } = await axios.get('https://randomuser.me/api/?results=40')
+      const { data } = await axios.get('https://randomuser.me/api/?results=30')
       setFriends(data.results)
-      console.log(data.results)
+
     } catch (error) {
       console.log(error)
     }
@@ -26,7 +27,7 @@ export default function App() {
     <View style={styles.container}>
       <NavBar />
       <View style={styles.swipes}>
-
+        {friends.length > 1 && <Friend friend={friends[currentIndex]} />}
       </View>
     </View>
   );
