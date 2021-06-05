@@ -1,14 +1,14 @@
 import React from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
-const Footer = () => {
+const Footer = ({ handleRemove, handleLove }) => {
   return (
     <View style={styles.container}>
       <View />
-      <TouchableOpacity style={styles.button} >
+      <TouchableOpacity style={styles.button} onPress={handleRemove} >
         <FontAwesome name="times" size={27} color="#ff0000"></FontAwesome>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleLove}>
         <FontAwesome name="heart" size={27} color="#6644F7" ></FontAwesome>
       </TouchableOpacity>
       <View />

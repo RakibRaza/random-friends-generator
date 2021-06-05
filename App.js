@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Constants, { UserInterfaceIdiom } from 'expo-constants'
 import NavBar from "./components/NavBar";
@@ -9,7 +9,8 @@ import Swipes from "./components/Swipes";
 export default function App() {
   const [friends, setFriends] = useState([])
   const [currentIndex, setCurrentIndex] = useState(0)
-
+  const swipesRef = useRef(null)
+  const [isLove, setIsLove] = useState(false)
   async function fetchFriends() {
     try {
       const { data } = await axios.get('https://randomuser.me/api/?results=20')
@@ -35,6 +36,19 @@ export default function App() {
     const nextIndex = friends.length - 2 === currentIndex ? 0 : currentIndex + 1
     setCurrentIndex(nextIndex)
   }
+  const handleRemove = () => {
+    swipesRef.current.openLeft()
+  }
+  const handleLove = () => {
+    setIsLove(true)
+  }
+  useEffect(() => {
+    const timeOut = setTimeout(() => {
+      setIsLove(false)
+    }, 1000);
+
+    return () => clearTimeout(timeOut)
+  }, [isLove])
 
   return (
     <View style={styles.container}>
@@ -45,13 +59,15 @@ export default function App() {
             currentIndex === index && (
               <Swipes
                 key={index}
+                ref={swipesRef}
                 currentIndex={currentIndex}
                 friends={friends}
                 handleLeft={handleLeft}
                 handleRight={handleRight}
+                isLove={isLove}
               ></Swipes>))}
       </View>
-      <Footer />
+      <Footer handleRemove={handleRemove} handleLove={handleLove} />
     </View>
   );
 }

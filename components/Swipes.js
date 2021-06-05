@@ -4,7 +4,7 @@ import Swipeable from 'react-native-gesture-handler/Swipeable'
 import { RectButton } from 'react-native-gesture-handler'
 import Friend from './Friend'
 
-const Swipes = ({ friends, currentIndex, handleLeft, handleRight, swipesRef }) => {
+const Swipes = ({ friends, currentIndex, handleLeft, handleRight, swipesRef, isLove }) => {
 
   const renderLeftActions = () => {
     return (
@@ -24,7 +24,7 @@ const Swipes = ({ friends, currentIndex, handleLeft, handleRight, swipesRef }) =
 
   return (
     <Swipeable
-      // ref={swipesRef}
+      ref={swipesRef}
       friction={2}
       leftThreshold={40}
       rightThreshold={40}
@@ -41,7 +41,7 @@ const Swipes = ({ friends, currentIndex, handleLeft, handleRight, swipesRef }) =
     // onSwipeableLeftWillOpen={() => setWillLike(true)}
     // onSwipeableRightWillOpen={() => setWillPass(true)}
     >
-      <Friend friend={friends[currentIndex]} />
+      <Friend friend={friends[currentIndex]} isLove={isLove} />
     </Swipeable>
   )
 }
@@ -54,4 +54,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default Swipes
+export default React.forwardRef((props, ref) => <Swipes swipesRef={ref} {...props}></Swipes>)
