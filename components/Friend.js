@@ -23,7 +23,7 @@ const Friend = ({ friend }) => {
 
 const styles = StyleSheet.create({
   image: {
-    height: '450px',
+    height: '435px',
     resizeMode: 'cover',
     borderRadius: 20,
   },

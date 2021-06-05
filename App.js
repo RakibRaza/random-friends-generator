@@ -4,6 +4,7 @@ import Constants from 'expo-constants'
 import NavBar from "./components/NavBar";
 import axios from 'axios'
 import Friend from "./components/Friend";
+import Footer from "./components/Footer";
 
 export default function App() {
   const [friends, setFriends] = useState([])
@@ -29,6 +30,7 @@ export default function App() {
       <View style={styles.swipes}>
         {friends.length > 1 && <Friend friend={friends[currentIndex]} />}
       </View>
+      <Footer />
     </View>
   );
 }
@@ -39,7 +41,6 @@ const styles = StyleSheet.create({
     marginTop: Constants.statusBarHeight
   },
   swipes: {
-    flex: 1,
     padding: 10,
     paddingTop: 8,
     shadowColor: '#000',
