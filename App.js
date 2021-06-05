@@ -1,17 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import Constants, { UserInterfaceIdiom } from 'expo-constants'
+import { StyleSheet, View } from "react-native";
+import Constants from 'expo-constants'
 import NavBar from "./components/NavBar";
 import axios from 'axios'
 import Footer from "./components/Footer";
 import Swipes from "./components/Swipes";
 
-export default function App() {
+const App = () => {
   const [friends, setFriends] = useState([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const swipesRef = useRef(null)
   const [isLove, setIsLove] = useState(false)
-  async function fetchFriends() {
+
+  const fetchFriends = async () => {
     try {
       const { data } = await axios.get('https://randomuser.me/api/?results=20')
       setFriends(data.results)
@@ -25,23 +26,27 @@ export default function App() {
     fetchFriends()
   }, [])
 
-  function handleLeft() {
+  const handleLeft = () => {
     nextUser()
   }
 
-  function handleRight() {
+  const handleRight = () => {
     nextUser()
   }
-  function nextUser() {
+
+  const nextUser = () => {
     const nextIndex = friends.length - 2 === currentIndex ? 0 : currentIndex + 1
     setCurrentIndex(nextIndex)
   }
+
   const handleRemove = () => {
     swipesRef.current.openLeft()
   }
+
   const handleLove = () => {
     setIsLove(true)
   }
+
   useEffect(() => {
     const timeOut = setTimeout(() => {
       setIsLove(false)
@@ -90,3 +95,6 @@ const styles = StyleSheet.create({
     elevation: 7,
   },
 });
+
+
+export default App

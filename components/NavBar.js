@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { FontAwesome5, FontAwesome } from '@expo/vector-icons'
+
 const NavBar = () => {
   return (
     <View style={styles.container}>

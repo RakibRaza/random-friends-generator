@@ -13,6 +13,7 @@ const Swipes = ({ friends, currentIndex, handleLeft, handleRight, swipesRef, isL
       </RectButton>
     )
   }
+
   const renderRightActions = () => {
     return (
       <RectButton style={styles.container}>
@@ -30,16 +31,8 @@ const Swipes = ({ friends, currentIndex, handleLeft, handleRight, swipesRef, isL
       rightThreshold={40}
       renderLeftActions={renderLeftActions}
       renderRightActions={renderRightActions}
-      onSwipeableLeftOpen={() => {
-        // setWillLike(false)
-        handleLeft()
-      }}
-      onSwipeableRightOpen={() => {
-        // setWillPass(false)
-        handleRight()
-      }}
-    // onSwipeableLeftWillOpen={() => setWillLike(true)}
-    // onSwipeableRightWillOpen={() => setWillPass(true)}
+      onSwipeableLeftOpen={handleLeft}
+      onSwipeableRightOpen={() => { handleRight() }}
     >
       <Friend friend={friends[currentIndex]} isLove={isLove} />
     </Swipeable>
