@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import Constants from 'expo-constants'
+import Constants, { UserInterfaceIdiom } from 'expo-constants'
 import NavBar from "./components/NavBar";
 import axios from 'axios'
-import Friend from "./components/Friend";
 import Footer from "./components/Footer";
+import Swipes from "./components/Swipes";
 
 export default function App() {
   const [friends, setFriends] = useState([])
@@ -12,7 +12,7 @@ export default function App() {
 
   async function fetchFriends() {
     try {
-      const { data } = await axios.get('https://randomuser.me/api/?results=30')
+      const { data } = await axios.get('https://randomuser.me/api/?results=20')
       setFriends(data.results)
 
     } catch (error) {
@@ -24,11 +24,32 @@ export default function App() {
     fetchFriends()
   }, [])
 
+  function handleLeft() {
+    nextUser()
+  }
+
+  function handleRight() {
+    nextUser()
+  }
+  function nextUser() {
+    const nextIndex = friends.length - 2 === currentIndex ? 0 : currentIndex + 1
+    setCurrentIndex(nextIndex)
+  }
+
   return (
     <View style={styles.container}>
       <NavBar />
       <View style={styles.swipes}>
-        {friends.length > 1 && <Friend friend={friends[currentIndex]} />}
+        {friends.length > 1 && friends.map(
+          (friend, index) =>
+            currentIndex === index && (
+              <Swipes
+                key={index}
+                currentIndex={currentIndex}
+                friends={friends}
+                handleLeft={handleLeft}
+                handleRight={handleRight}
+              ></Swipes>))}
       </View>
       <Footer />
     </View>
